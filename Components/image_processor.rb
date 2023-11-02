@@ -1,22 +1,23 @@
 require 'base64'
-
+require_relative './File/file_writer'
+require_relative './File/file_reader'
 class ImageProcessor
-  def initialize(image_path)
-    @image_path = image_path
+  def initialize(file_path)
+    @file_path = file_path
   end
 
   def extract_data_from_image
     # Convert the image to a base64 encoded string
-    Base64.strict_encode64(File.open(@image_path, 'rb').read)
+    Base64.strict_encode64(File.open(@file_path, 'rb').read)
+    #puts Base64.strict_encode64(File.open("Images/Web_Page_Wikipedia.png", 'rb').read)
   end
 
   def save_extracted_data(data)
-    filename_without_extension = File.basename(@image_path, ".*")
-    absolute_path = File.expand_path("test/#{filename_without_extension}.txt")
-    File.open(absolute_path, 'w') do |file|
-      file.write(data)
+    if data == nil
+      data = ""
     end
-    raise "File creation failed!" unless File.exist?(absolute_path)
-    print absolute_path
+    filename_without_extension = File.basename(@file_path, ".*")
+    absolute_path = File.expand_path("test/OUT/#{filename_without_extension}.txt")
+    FileWriter.new(absolute_path, data, "ImageProcessor").write_data_new
   end
 end

@@ -1,5 +1,6 @@
 require 'json'
 require 'net/http'
+require_relative '../File/file_writer'
 
 class CodeGenerator
   def initialize(api_key)
@@ -24,12 +25,7 @@ class CodeGenerator
   end
 
   def save_generated_code(code)
-    File.open('output.html', 'w') do |file|
-      file.write(code['html']) # Adjust based on the structure of `code`
-    end
-
-    File.open('styles.css', 'w') do |file|
-      file.write(code['css']) # Adjust based on the structure of `code`
-    end
+    FileWriter.new("OUT/Results/output.html", code['html'], "AiGenerator").write_data_new
+    FileWriter.new("OUT/Results/styles.css", code['css'], "AiGenerator").write_data_new
   end
 end

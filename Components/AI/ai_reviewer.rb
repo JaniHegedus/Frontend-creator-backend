@@ -1,6 +1,6 @@
 require 'net/http'
 require 'json'
-require_relative '../Components/file_reader'
+require_relative '../File/file_reader'
 require "google/cloud/vision"  # You'll need to include this gem
 
 class AiReviewer
@@ -25,5 +25,6 @@ class AiReviewer
     )
 
     @review_data = response.responses.first.label_annotations.map(&:description)
+
   end
 end
