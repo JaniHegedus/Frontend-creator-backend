@@ -14,7 +14,7 @@ require_relative '../image_processor'
 
 
 class AiReviewer
-  def initialize(api_key, filepath, output_file)
+  def initialize(api_key, filepath, output_file="")
     @filepath = filepath
     @api_key = api_key
     @api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{@api_key}"

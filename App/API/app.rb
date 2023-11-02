@@ -24,7 +24,7 @@ get '/hello' do
   { message: 'Hello, Ruby Backend!' }.to_json
 end
 get '/test/aiImageTest' do
-  result = AiReviewer.new(config.load,"resources/Images/Web_Page_Wikipedia.png", output_path).review_image_to_json
+  result = AiReviewer.new(config.load,"resources/Images/Web_Page_Wikipedia.png").review_image_to_json
   content_type :json
   result
 end
