@@ -29,9 +29,10 @@ class AiTest < Minitest::Test
     config = Config.new(type: "google")
     filename_without_extension = File.basename(@filepath, ".*")
     output_path = File.expand_path("test/OUT/#{filename_without_extension}.json")
-    @reviewer = AiReviewer.new(config.load,@filepath, output_path).review_image_to_file # Adjusted the path to make sure it looks in the test folder
-    @reviewer = AiReviewer.new(config.load,@filepath, output_path).review_image_to_json # Adjusted the path to make sure it looks in the test folder
-    puts AiReviewer.new(config.load,@filepath, output_path).review_image_to_json
+    @reviewer = AiReviewer.new(config.load,@filepath, output_path)
+    @reviewer.review_image_to_file # Adjusted the path to make sure it looks in the test folder
+    @reviewer.review_image_to_json # Adjusted the path to make sure it looks in the test folder
+    puts @reviewer.review_image_to_json
     # ... your test logic here
   end
 

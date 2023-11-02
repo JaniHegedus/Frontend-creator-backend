@@ -19,9 +19,9 @@ class AiReviewer
     @api_key = api_key
     @api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{@api_key}"
     @output_file = output_file
+    send_image
   end
-
-  def review_image_to_file
+  def send_image
     # Step 3 - Set request JSON body.
     body = {
       requests: [{
@@ -42,38 +42,23 @@ class AiReviewer
     https.use_ssl = true
     request = Net::HTTP::Post.new(uri.request_uri)
     request["Content-Type"] = "application/json"
-    response = https.request(request, body.to_json)
+    @response = https.request(request, body.to_json)
     # Step 5 - Print the response in the console.
     #puts response.body
-    FileWriter.new(@output_file,response.body, "AIReviewer").write_data_new
-    #client = ::Google::Cloud::Vision::V1::ProductSearch::Client.new
-    #request = ::Google::Cloud::Vision::V1::CreateProductSetRequest.new # (request fields as keyword arguments...)
-    #response = client.create_product_set request
-    #puts response
+  end
+  def review_image_to_file
+    if @output_file == ""
+      "No filepath"
+    else
+      FileWriter.new(@output_file,@response.body, "AIReviewer").write_data_new
+      #client = ::Google::Cloud::Vision::V1::ProductSearch::Client.new
+      #request = ::Google::Cloud::Vision::V1::CreateProductSetRequest.new # (request fields as keyword arguments...)
+      #response = client.create_product_set request
+      #puts response
+    end
   end
   def review_image_to_json
-    body = {
-      requests: [{
-                   image: {
-                     content: ImageProcessor.new(@filepath).extract_data_from_image
-                   },
-                   features: [
-                     {
-                       type: 'LABEL_DETECTION', # Details are below.
-                       maxResults: 100 # The number of results you would like to get
-                     }
-                   ]
-                 }]
-    }
-    # Step 4 - Send request.
-    uri = URI.parse(@api_url)
-    https = Net::HTTP.new(uri.host, uri.port)
-    https.use_ssl = true
-    request = Net::HTTP::Post.new(uri.request_uri)
-    request["Content-Type"] = "application/json"
-    response = https.request(request, body.to_json)
-    # Step 5 - Print the response in the console.
-    response.body
+    @response.body
     #client = ::Google::Cloud::Vision::V1::ProductSearch::Client.new
     #request = ::Google::Cloud::Vision::V1::CreateProductSetRequest.new # (request fields as keyword arguments...)
     #response = client.create_product_set request
