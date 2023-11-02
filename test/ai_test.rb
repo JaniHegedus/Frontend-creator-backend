@@ -27,11 +27,9 @@ class AiTest < Minitest::Test
   def test_ai_review
     # Now initialize AiReviewer
     config = Config.new(type: "google")
-    reviewer = AiReviewer.new(config.load,@filepath) # or some initialization logic
-    reviewer.review_image
     filename_without_extension = File.basename(@filepath, ".*")
     absolute_path = File.expand_path("test/OUT/#{filename_without_extension}.txt")
-    @reviewer = AiReviewer.new(config.load, absolute_path) # Adjusted the path to make sure it looks in the test folder
+    @reviewer = AiReviewer.new(config.load,@filepath, absolute_path).review_image # Adjusted the path to make sure it looks in the test folder
     @generator = CodeGenerator.new(config.load)
     # ... your test logic here
   end

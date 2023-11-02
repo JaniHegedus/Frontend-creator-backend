@@ -13,7 +13,7 @@ class FileWriter
     end
     File.read(@file_path)
     raise "File creation failed!" unless File.exist?(@file_path)
-    puts @processname +": "+ @file_path + ":\n" + @data
+    #puts @processname +": "+ @file_path + ":\n" + @data
   end
   def write_data_append
     File.open(@file_path, 'a') do |file|
