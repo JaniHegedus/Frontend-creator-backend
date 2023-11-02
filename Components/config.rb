@@ -2,7 +2,7 @@ require 'yaml'
 
 class Config
   def initialize(type:)
-    raise ArgumentError, "Invalid type. Expected 'openai' or 'google'." unless ["openai", "google"].include?(type)
+    raise ArgumentError, "Invalid type. Expected 'openai' or 'google'." unless %w[openai google].include?(type)
     @type = type
   end
 
