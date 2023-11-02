@@ -7,7 +7,7 @@ require_relative '../../Components/config'
 
 config = Config.new(type: "google")
 filename_without_extension = File.basename("resources/Images/Web_Page_Wikipedia.png", ".*")
-output_path = File.expand_path("test/OUT/#{filename_without_extension}.json")
+output_path = File.expand_path("resources/OUT/#{filename_without_extension}.json")
 
 use Rack::Cors do
   allow do
